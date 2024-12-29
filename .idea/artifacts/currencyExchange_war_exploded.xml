@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="currencyExchange:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/currencyExchange_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="currencyExchange" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.xerial:sqlite-jdbc:3.41.2.2" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.34" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.15.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.15.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.15.2" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:10.1.28" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-annotations-api:10.1.28" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web3" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web2" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web5" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web4" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web7" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web6" />
+      <element id="javaee-facet-resources" facet="currencyExchange/web/Web8" />
+    </root>
+  </artifact>
+</component>

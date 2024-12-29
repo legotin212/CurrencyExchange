@@ -1,0 +1,19 @@
+
+###
+GET http://localhost:8080/currencyExchange_war_exploded/currencies
+###
+GET http://localhost:8080/currencyExchange_war_exploded/currency/USD
+###
+http://localhost:8080/currencyExchange_war_exploded/currency/USssD
+###
+
+###
+
+###
+
+###
+
+###
+
+###
+
