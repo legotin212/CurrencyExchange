@@ -6,7 +6,7 @@ import org.exception.WrongArgumentsException;
 import org.model.Currency;
 import org.service.CurrencyService;
 import org.service.CurrencyServiceImpl;
-import org.util.CurrencyValidator;
+import org.util.validator.CurrencyValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

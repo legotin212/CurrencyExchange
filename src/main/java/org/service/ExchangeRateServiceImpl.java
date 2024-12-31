@@ -4,6 +4,8 @@ import org.dao.ExchangeRatesDAOImpl;
 import org.dao.ExchangeRatesDAO;
 import org.dto.ExchangeRateDTO;
 import org.model.ExchangeRate;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +45,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     }
 
     @Override
-    public void save(String base_currency_code, String target_currency_code, double rate) {
+    public void save(String base_currency_code, String target_currency_code, BigDecimal rate) {
         exchangeRatesDAO.save(base_currency_code,target_currency_code,rate);
     }
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet("/exchange")
 public class Exchange extends HttpServlet {
@@ -23,8 +24,8 @@ public class Exchange extends HttpServlet {
 
         String baseCurrencyCode = req.getParameter("from");
         String targetCurrencyCode = req.getParameter("to");
-        double amount = Double.parseDouble(req.getParameter("amount"));
-
+        double param = Double.parseDouble(req.getParameter("amount"));
+        BigDecimal amount = BigDecimal.valueOf(param);
         if(baseCurrencyCode.equals(targetCurrencyCode)) {
             throw new WrongArgumentsException("Enter target currency code");
         }

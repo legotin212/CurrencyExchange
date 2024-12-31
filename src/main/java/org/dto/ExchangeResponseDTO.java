@@ -2,5 +2,7 @@ package org.dto;
 
 import org.model.Currency;
 
-public record ExchangeResponseDTO(Currency baseCurrency, Currency targetCurrency, double rate, double amount, double convertedAmount) {
+import java.math.BigDecimal;
+
+public record ExchangeResponseDTO(Currency baseCurrency, Currency targetCurrency, BigDecimal rate, BigDecimal amount, BigDecimal convertedAmount) {
 }

@@ -1,4 +1,4 @@
-package org.util;
+package org.util.validator;
 
 public class CurrencyValidator {
     public  String validate(String name, String code, String sign){

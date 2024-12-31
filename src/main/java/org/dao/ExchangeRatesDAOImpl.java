@@ -10,6 +10,7 @@ import org.model.ExchangeRate;
 import org.util.DataSourceFactory;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +44,7 @@ public class ExchangeRatesDAOImpl implements ExchangeRatesDAO {
     }
 
     @Override
-    public void save(String base_currency_code, String target_currency_code, double rate) {
+    public void save(String base_currency_code, String target_currency_code, BigDecimal rate) {
         String sql =
                 "INSERT INTO ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)" +
                 " VALUES ((select ID from currencies where code = ?)," +
@@ -54,7 +55,7 @@ public class ExchangeRatesDAOImpl implements ExchangeRatesDAO {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, base_currency_code);
             pstmt.setString(2, target_currency_code);
-            pstmt.setDouble(3, rate);
+            pstmt.setBigDecimal(3, rate);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -186,7 +187,7 @@ public class ExchangeRatesDAOImpl implements ExchangeRatesDAO {
                 resultSet.getInt("exchange_rate_id"),
                 resultSet.getInt("base_currency_id"),
                 resultSet.getInt("target_currency_id"),
-                resultSet.getDouble("exchange_rate")
+                BigDecimal.valueOf(resultSet.getDouble("exchange_rate"))
         );
     }
 

@@ -4,11 +4,13 @@ import org.dao.CurrencyDAO;
 import org.dao.CurrencyDAOImpl;
 import org.dao.ExchangeRatesDAO;
 import org.dao.ExchangeRatesDAOImpl;
-import org.dto.ExchangeRateDTO;
 import org.dto.ExchangeResponseDTO;
 import org.exception.WrongArgumentsException;
 import org.model.Currency;
 import org.model.ExchangeRate;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 public class ExchangeServiceImpl implements ExchangeService {
@@ -32,53 +34,56 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     @Override
-    public ExchangeResponseDTO exchange(String baseCurrencyCode, String targetCurrencyCode, double amount) {
+    public ExchangeResponseDTO exchange(String baseCurrencyCode, String targetCurrencyCode, BigDecimal amount) {
 
         Optional<ExchangeRate> rateDTO = exchangeRatesDAO.get(baseCurrencyCode, targetCurrencyCode);
         if(rateDTO.isPresent()){
-            double rate = rateDTO.get().getRate();
-            double convertedAmount = exchange(amount, rate);
+            BigDecimal rate = rateDTO.get().getRate();
+            BigDecimal convertedAmount = exchange(amount, rate);
             return createResponseDTO( baseCurrencyCode,  targetCurrencyCode,  amount, rate, convertedAmount);
         }
 
         Optional<ExchangeRate> reverseRateDTO = exchangeRatesDAO.get(targetCurrencyCode, baseCurrencyCode);
         if(reverseRateDTO.isPresent()){
-            double rate = reverseRate(reverseRateDTO.get().getRate());
-            double convertedAmount = exchange(amount, rate);
+            BigDecimal rate = reverseRate(reverseRateDTO.get().getRate());
+            BigDecimal convertedAmount = exchange(amount, rate);
             return createResponseDTO( baseCurrencyCode,  targetCurrencyCode,  amount, rate, convertedAmount);
         }
 
         Optional<ExchangeRate> baseCurrencyToUSD = exchangeRatesDAO.get("USD", baseCurrencyCode );
         Optional<ExchangeRate> targetCurrencyToUSD = exchangeRatesDAO.get("USD", targetCurrencyCode);
         if(baseCurrencyToUSD.isPresent() && targetCurrencyToUSD.isPresent()){
-            double rate = crossRateExchangeRate(baseCurrencyToUSD.get().getRate(), targetCurrencyToUSD.get().getRate());
-            double convertedAmount = exchange(amount, rate);
+            BigDecimal rate = crossRateExchangeRate(baseCurrencyToUSD.get().getRate(), targetCurrencyToUSD.get().getRate());
+            BigDecimal convertedAmount = exchange(amount, rate);
             return createResponseDTO( baseCurrencyCode,  targetCurrencyCode,  amount, rate, convertedAmount);
-
         }
 
         throw new WrongArgumentsException("No available exchange rate found for " + baseCurrencyCode + " and " + targetCurrencyCode);
     }
 
-
-
-    private ExchangeResponseDTO createResponseDTO(String baseCurrencyCode, String targetCurrencyCode, double amount, double rate,  double convertedAmount){
+    private ExchangeResponseDTO createResponseDTO(String baseCurrencyCode, String targetCurrencyCode, BigDecimal amount, BigDecimal rate, BigDecimal convertedAmount){
         Currency baseCurrency = currencyDAO.findByCode(baseCurrencyCode).get();
         Currency targetCurrency = currencyDAO.findByCode(targetCurrencyCode).get();
 
-        return new ExchangeResponseDTO(baseCurrency,targetCurrency, rate, amount, convertedAmount);
+        return new ExchangeResponseDTO(
+                baseCurrency,
+                targetCurrency,
+                rate.setScale(2,BigDecimal.ROUND_HALF_UP),
+                amount.setScale(2,BigDecimal.ROUND_HALF_UP),
+                convertedAmount.setScale(2,BigDecimal.ROUND_HALF_UP));
     }
 
-    private double crossRateExchangeRate(double baseCurrencyToUSDRate, double targetCurrencyToUSDRate) {
-       return targetCurrencyToUSDRate/baseCurrencyToUSDRate;
+    private BigDecimal crossRateExchangeRate(BigDecimal baseCurrencyToUSDRate, BigDecimal targetCurrencyToUSDRate) {
+       return targetCurrencyToUSDRate.divide(baseCurrencyToUSDRate, 10, RoundingMode.HALF_UP);
     }
 
-    private double exchange(double amount, double rate) {
-        return amount * rate;
+    private BigDecimal exchange(BigDecimal amount, BigDecimal rate) {
+        return amount.multiply(rate);
     }
 
-    private double reverseRate(double rate){
-        return 1/rate;
+    private BigDecimal reverseRate(BigDecimal rate){
+        BigDecimal one = new BigDecimal(1);
+        return one.divide(rate, 10, RoundingMode.HALF_UP);
     }
 
 }

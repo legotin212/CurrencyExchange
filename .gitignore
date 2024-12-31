@@ -1,37 +1,30 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
+# IntelliJ IDEA project files
 .idea/
-*.iws
 *.iml
-*.ipr
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Compiled class files
+*.class
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Log files
+*.log
 
-### VS Code ###
-.vscode/
+# Maven / Gradle directories
+target/
+out/
 
-### Mac OS ###
+# Operating system files
 .DS_Store
-# Project exclude paths
-/out/
+Thumbs.db
+
+# Database files
+*.db
+
+# Web application specific
+/webapp/currency-exchange-frontend-main*
+
+# Ignore HTTP test files
+*.http
+
+# Temp files
+*.tmp
+*.temp

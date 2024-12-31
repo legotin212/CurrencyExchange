@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 
 @Getter
 @ToString
@@ -13,11 +15,11 @@ public class ExchangeRate {
     private final int BaseCurrencyId;
     private final int TargetCurrencyId;
     @Setter
-    private double Rate;
+    private BigDecimal Rate;
 
 
 
-    public ExchangeRate(int id, int baseCurrencyId, int targetCurrencyId, double rate) {
+    public ExchangeRate(int id, int baseCurrencyId, int targetCurrencyId, BigDecimal rate) {
         this.id = id;
         BaseCurrencyId = baseCurrencyId;
         TargetCurrencyId = targetCurrencyId;
